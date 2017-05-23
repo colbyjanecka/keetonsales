@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
+
 import os
 from oscar import get_core_apps
 from oscar.defaults import *
@@ -66,13 +67,21 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'keetonshop.urls'
 
+location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', x)
+
+TEMPLATE_LOADERS = (
+
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.eggs.Loader',
+
+)
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
-            OSCAR_MAIN_TEMPLATE_DIR
+            location('keetonshop/templates'),
 	],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -144,16 +153,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join('static'),
+    os.path.join('static/'),
 )
 #STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'static'), ]
+STATIC_ROOT = location('keetonshop/static')
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = location('keetonshop/media')
+THUMBNAIL_DEBUG = True
+THUMBNAIL_KEY_PREFIX = 'oscar-sandbox'
 
 AUTHENTICATION_BACKENDS = (
     'oscar.apps.customer.auth_backends.EmailBackend',
@@ -166,3 +184,8 @@ HAYSTACK_CONNECTIONS = {
         'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
     },
 }
+
+
+OSCAR_SHOP_NAME = 'Keeton Sales Agency'
+
+OSCAR_DEFAULT_CURRENCY = 'USD'
