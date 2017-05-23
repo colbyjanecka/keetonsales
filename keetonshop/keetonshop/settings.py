@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 from oscar import get_core_apps
 from oscar.defaults import *
+from oscar import OSCAR_MAIN_TEMPLATE_DIR
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,7 +28,7 @@ SECRET_KEY = 'keo2at_y8f=okb6p8f)!5*m(nle_a!^d1+*edy5o&(qhgab+%x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -44,13 +45,14 @@ INSTALLED_APPS = [
     'widget_tweaks',
 
     'django.contrib.sites',
-    
+
 ] + get_core_apps()
 
 SITE_ID = 1
 
+
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware', 
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -64,7 +66,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'keetonshop.urls'
 
-from oscar import OSCAR_MAIN_TEMPLATE_DIR
 
 TEMPLATES = [
     {
@@ -85,7 +86,7 @@ TEMPLATES = [
                 'oscar.apps.promotions.context_processors.promotions',
                 'oscar.apps.checkout.context_processors.checkout',
                 'oscar.apps.customer.notifications.context_processors.notifications',
-                'oscar.core.context_processors.metadata', 
+                'oscar.core.context_processors.metadata',
 
             ],
         },
@@ -143,7 +144,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+
+
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join('static'),
+)
+#STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'static'), ]
+
+
 
 AUTHENTICATION_BACKENDS = (
     'oscar.apps.customer.auth_backends.EmailBackend',
