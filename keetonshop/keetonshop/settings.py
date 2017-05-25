@@ -69,13 +69,7 @@ ROOT_URLCONF = 'keetonshop.urls'
 
 location = lambda x: os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', x)
 
-TEMPLATE_LOADERS = (
 
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-    'django.template.loaders.eggs.Loader',
-
-)
 
 TEMPLATES = [
     {
@@ -101,6 +95,14 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATE_LOADERS = (
+
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.eggs.Loader',
+
+)
 
 WSGI_APPLICATION = 'keetonshop.wsgi.application'
 
